@@ -22,36 +22,24 @@ public class GAConfig {
 
     private static final ModConfigSpec.BooleanValue HOSTILE_GOLEM_INFINITE_AMMO = BUILDER.comment("Whether to allow hostile golems to use infinite ammo").define("hostileGolemInfiniteAmmo", true);
     private static final ModConfigSpec.BooleanValue PLAYER_GOLEM_INFINITE_AMMO = BUILDER.comment("Whether to allow player golems to use infinite ammo").define("playerGolemInfiniteAmmo", false);
-
-//    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER.comment("A magic number").defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+//    private static final ModConfigSpec.IntValue GOLEM_GUN_SHOOT_RANGE = BUILDER.comment("The range by blocks that golems can reach when shooting with guns. Requires reload.").defineInRange("golemGunShootRange", 35, 1, Integer.MAX_VALUE);
+    private static final ModConfigSpec.BooleanValue APPLY_MOB_NERFS_TO_PLAYER_GOLEMS = BUILDER.comment("Whether to apply the damage, speed, spread nerfs used on mobs to player golems").define("applyMobNerfsToPlayerGolems",true);
+    private static final ModConfigSpec.BooleanValue APPLY_MOB_NERFS_TO_HOSTILE_GOLEMS = BUILDER.comment("Whether to apply the damage, speed, spread nerfs used on mobs to hostile golems").define("applyMobNerfsToHostileGolems",true);
 
 //    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER.comment("What you want the introduction message to be for the magic number").define("magicNumberIntroduction", "The magic number is... ");
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
     public static boolean hostileGolemInfiniteAmmo,playerGolemInfiniteAmmo;
-
-    private static boolean validateItemName(final Object obj) {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
-    }
+//    public static int golemGunShootRange;
+    public static boolean applyMobNerfsToPlayerGolems,applyMobNerfsToHostileGolems;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         hostileGolemInfiniteAmmo = HOSTILE_GOLEM_INFINITE_AMMO.get();
         playerGolemInfiniteAmmo = PLAYER_GOLEM_INFINITE_AMMO.get();
-    }
-
-    /**
-     * 是否启用无限弹药
-     * */
-    public static boolean isInfinite(Mob mob){
-        if(mob instanceof AbstractGolemEntity<?,?> golem){
-            if(golem.isHostile()){
-                return GAConfig.hostileGolemInfiniteAmmo;
-            }else{
-                return GAConfig.playerGolemInfiniteAmmo;
-            }
-        }
-        return true; // 非傀儡则如原版生物
+//        golemGunShootRange = GOLEM_GUN_SHOOT_RANGE.get();
+        applyMobNerfsToPlayerGolems = APPLY_MOB_NERFS_TO_PLAYER_GOLEMS.get();
+        applyMobNerfsToHostileGolems = APPLY_MOB_NERFS_TO_HOSTILE_GOLEMS.get();
     }
 }

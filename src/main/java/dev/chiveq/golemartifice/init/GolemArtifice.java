@@ -2,7 +2,6 @@ package dev.chiveq.golemartifice.init;
 
 import com.mojang.logging.LogUtils;
 import dev.chiveq.golemartifice.content.GolemRangedGunAttackGoal;
-import dev.chiveq.golemartifice.content.IAASmartGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry;
 import io.redspace.irons_artifice.item.GunItem;
@@ -14,7 +13,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(GolemArtifice.MODID)
 public class GolemArtifice {
 
@@ -33,13 +31,9 @@ public class GolemArtifice {
      * */
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(()->{
-//            GolemWeaponRegistry.HUMANOID.register(loc("irons_artifice_gun"),
-//                    (golem,stack,hand) -> WeaponStatus.RANGED.of(stack.getItem() instanceof GunItem),
-//                    (golem,melee) -> new IAASmartGoal<>(golem,golem,melee,1,35) // TODO 改为可配置
-//                    );
             GolemWeaponRegistry.HUMANOID.register(loc("irons_artifice_gun"),
                     (golem,stack,hand) -> WeaponStatus.RANGED.of(stack.getItem() instanceof GunItem),
-                    (golem,melee) -> new GolemRangedGunAttackGoal(golem,melee,35)
+                    (golem,melee) -> new GolemRangedGunAttackGoal(golem,melee,35/*GAConfig.golemGunShootRange*/)
             );
         });
     }

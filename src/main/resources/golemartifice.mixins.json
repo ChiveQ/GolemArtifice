@@ -4,10 +4,13 @@
   "package": "dev.chiveq.golemartifice.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "GunplayManagerMixin"
+    "GunplayManagerMixin",
+    "HumanoidGolemEntityMixin"
   ],
   "client": [
-
+    "HumanoidGolemModelMixin",
+    "HumanoidModelAccessor",
+    "PlayerModelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
