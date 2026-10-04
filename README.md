@@ -20,7 +20,7 @@ These configs can be changed separately for player golems and hostile golems.
 ## 功能
 - 傀儡从自身的槽位或莱特兰背包的末影背包消耗弹药。
 - 傀儡射击时不会误伤友方傀儡。
-- 弹药耗尽
+- 弹药耗尽而持有近战武器时，傀儡会改用近战武器。
 ## 配置
 - 是否对傀儡应用怪物削弱
 - 是否让傀儡有无限弹药
