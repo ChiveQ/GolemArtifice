@@ -51,7 +51,7 @@ public class GolemRangedGunAttackGoal extends RangedGunAttackGoal<HumanoidGolemE
     @Override
     public boolean mayActivate(ItemStack stack){
         if(stack.getItem() instanceof GunItem){
-            return hasAmmo();
+            return hasAmmo() || !GunItem.getMagazine(stack).isEmpty();
         }
         return false;
     }

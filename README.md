@@ -7,6 +7,7 @@ Currently supports 1.21.1. Will support 26.1.2 in the future, and 1.20.1 after I
 - Golems consume bullets from its inventory or dimensional backpacks from L2Backpacks. 
 - Golems won't hurt each other when shooting.
 - When short of bullets and having melee weapons, the golem will use the melee weapon instead.
+- Golems can use Bayonet Attachments normally.
 ## Configs
 - Whether to apply the mob nerf to golems.
 - Whether to allow golems to have infinite bullets
@@ -21,6 +22,7 @@ These configs can be changed separately for player golems and hostile golems.
 - 傀儡从自身的槽位或莱特兰背包的末影背包消耗弹药。
 - 傀儡射击时不会误伤友方傀儡。
 - 弹药耗尽而持有近战武器时，傀儡会改用近战武器。
+- 傀儡可正常使用刺刀改装件。
 ## 配置
 - 是否对傀儡应用怪物削弱
 - 是否让傀儡有无限弹药
