@@ -1,23 +1,14 @@
 package dev.chiveq.golemartifice.content;
 
-import dev.chiveq.golemartifice.init.GAConfig;
-import dev.chiveq.golemartifice.mixin.GunplayManagerMixin;
 import dev.chiveq.golemartifice.util.GolemAmmoUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IRangedWeaponGoal;
-import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
-import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemEntity;
 import io.redspace.irons_artifice.entity.ai.RangedGunAttackGoal;
 import io.redspace.irons_artifice.item.GunItem;
-import io.redspace.irons_artifice.item.GunplayManager;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * 参考傀儡本体compat.musket实现

@@ -1,6 +1,5 @@
 package dev.chiveq.golemartifice.mixin;
 
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import org.spongepowered.asm.mixin.Mixin;

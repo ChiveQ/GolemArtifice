@@ -1,6 +1,5 @@
 package dev.chiveq.golemartifice.mixin;
 
-import dev.chiveq.golemartifice.init.GAConfig;
 import dev.chiveq.golemartifice.util.GolemAmmoUtil;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemEntity;
@@ -12,12 +11,10 @@ import io.redspace.irons_artifice.item.GunplayManager;
 import io.redspace.irons_artifice.item.MagazineContents;
 import io.redspace.irons_artifice.item.ReloadState;
 import io.redspace.irons_artifice.item.TopLoadConfig;
-import io.redspace.irons_artifice.utils.IronsArtificeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
