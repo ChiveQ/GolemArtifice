@@ -4,11 +4,11 @@ import dev.chiveq.golemartifice.init.GAConfig;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import io.redspace.irons_artifice.utils.IronsArtificeTags;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import org.spongepowered.asm.mixin.Unique;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 public class GolemAmmoUtil {
 
@@ -26,50 +26,44 @@ public class GolemAmmoUtil {
         return true; // 非傀儡则如原版生物
     }
 
-    /**
-     * 傀儡所携弹总数。
-     */
-    public static int countAmmo(List<IItemHandlerModifiable> inventories) {
-        int total = 0;
-        for (IItemHandlerModifiable inv : inventories) {
-            for (int i = 0; i < inv.getSlots(); i++) {
-                ItemStack stack = inv.getStackInSlot(i);
-                if (stack.is(IronsArtificeTags.AMMO)) {
-                    total += stack.getCount();
-                }
-            }
-        }
-        return total;
-    }
 
     /**
      * 傀儡所携弹总数
      * */
     public static int countAmmo(AbstractGolemEntity<?,?> golem){
-        List<IItemHandlerModifiable> available = golem.aggregateInventories();
-        return countAmmo(available);
+        return countAmmo(golem.getItemHandler());
+        //List<IItemHandlerModifiable> available = golem.aggregateInventories();
+        //return countAmmo(available);
+    }
+
+    /**
+     * 傀儡所攜彈總數
+     * */
+    public static int countAmmo(ResourceHandler<@NotNull ItemResource> handler){
+        int total = 0;
+        for(int i = 0; i < handler.size(); i++){
+            ItemResource res = handler.getResource(i);
+            if(res.is(IronsArtificeTags.AMMO)) total += handler.getAmountAsInt(i);
+        }
+        return total;
     }
 
     /**
      * 按物品栏顺序扣除子弹，返回实际扣除的数量。
      */
-    @Unique
-    public static int consumeAmmo(List<IItemHandlerModifiable> inventories, int amount) {
+    public static int consumeAmmo(ResourceHandler<@NotNull ItemResource> handler,int amount){
         int remaining = amount;
-        for (IItemHandlerModifiable inv : inventories) {
-            if (remaining <= 0) {
-                break;
-            }
-            for (int i = 0; i < inv.getSlots() && remaining > 0; i++) {
-                ItemStack stack = inv.getStackInSlot(i);
-                if (!stack.is(IronsArtificeTags.AMMO)) {
-                    continue;
-                }
-                int take = Math.min(remaining, stack.getCount());
-                remaining -= inv.extractItem(i, take, false).getCount();
+        for(int i = 0; i< handler.size(); i++){
+            if(remaining <= 0 ) break;
+            ItemResource res = handler.getResource(i);
+            if(!res.is(IronsArtificeTags.AMMO)) continue;
+            int take = Math.min(remaining,handler.getAmountAsInt(i));
+            try(Transaction trans = Transaction.openRoot()){
+                remaining -= handler.extract(res,take,trans);
+                trans.commit();
             }
         }
-        return amount - remaining;
+        return amount  - remaining;
     }
 
 }

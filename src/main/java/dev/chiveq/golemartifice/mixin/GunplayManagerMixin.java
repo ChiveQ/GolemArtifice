@@ -1,6 +1,5 @@
 package dev.chiveq.golemartifice.mixin;
 
-import dev.chiveq.golemartifice.init.GAConfig;
 import dev.chiveq.golemartifice.util.GolemAmmoUtil;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
 import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemEntity;
@@ -12,17 +11,12 @@ import io.redspace.irons_artifice.item.GunplayManager;
 import io.redspace.irons_artifice.item.MagazineContents;
 import io.redspace.irons_artifice.item.ReloadState;
 import io.redspace.irons_artifice.item.TopLoadConfig;
-import io.redspace.irons_artifice.utils.IronsArtificeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 /**
  * 让傀儡在装填枪械时真正消耗自己携带的子弹。
@@ -33,7 +27,7 @@ import java.util.List;
  * 用傀儡自己的物品栏取代原版的 {@code Player} 背包来统计与扣减子弹，
  * 其余情况（非傀儡、以及配置为无限弹药的傀儡）直接放行给原逻辑。
  *
- * <p>弹药来源取自 {@link AbstractGolemEntity#aggregateInventories()}，
+ * <p>弹药来源取自 {@link AbstractGolemEntity#getItemHandler()} ，
  * 也就是本体对"傀儡身上带着什么"的定义，顺序为：
  * 主手与副手 → 装备槽 → 箭矢槽（arrowSlot）→ 备用副手槽（backupHand）。
  * 因此副手槽与箭矢槽里的子弹天然会被消耗，无需单独开槽；
@@ -70,8 +64,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 没有子弹就不开始装填；装不下的部分不参与动画时长计算
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
-        int available = GolemAmmoUtil.countAmmo(inventories);
+        int available = GolemAmmoUtil.countAmmo(golem.getItemHandler());
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
             return;
@@ -116,8 +109,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 装填期间子弹可能被拿走，此时按无弹处理，等下一次装填
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
-        int available = GolemAmmoUtil.countAmmo(inventories);
+        int available = GolemAmmoUtil.countAmmo(golem.getItemHandler());
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
             return;
@@ -128,7 +120,7 @@ public abstract class GunplayManagerMixin {
             toLoad = Math.min(toLoad, roundsToLoad);
         }
         // 按实际扣除的数量装填，避免扣不出来却把子弹算进弹匣
-        toLoad = GolemAmmoUtil.consumeAmmo(inventories, toLoad);
+        toLoad = GolemAmmoUtil.consumeAmmo(golem.getItemHandler(), toLoad);
         if (toLoad <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
             return;

@@ -1,29 +1,22 @@
 package dev.chiveq.golemartifice.content;
 
-import dev.chiveq.golemartifice.init.GAConfig;
-import dev.chiveq.golemartifice.mixin.GunplayManagerMixin;
 import dev.chiveq.golemartifice.util.GolemAmmoUtil;
 import dev.xkmc.mob_weapon_api.api.goals.IMeleeGoal;
 import dev.xkmc.mob_weapon_api.api.goals.IRangedWeaponGoal;
-import dev.xkmc.mob_weapon_api.api.goals.IWeaponGoal;
-import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
 import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemEntity;
 import io.redspace.irons_artifice.entity.ai.RangedGunAttackGoal;
 import io.redspace.irons_artifice.item.GunItem;
-import io.redspace.irons_artifice.item.GunplayManager;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 参考傀儡本体compat.musket实现
  * */
-public class GolemRangedGunAttackGoal extends RangedGunAttackGoal<HumanoidGolemEntity>
-        implements IRangedWeaponGoal<HumanoidGolemEntity> {
+public class GolemRangedGunAttackGoal extends RangedGunAttackGoal<@NotNull HumanoidGolemEntity>
+        implements IRangedWeaponGoal<@NotNull HumanoidGolemEntity> {
 
     /**
      * 近战回退接口
@@ -94,7 +87,7 @@ public class GolemRangedGunAttackGoal extends RangedGunAttackGoal<HumanoidGolemE
         LivingEntity target = mob.getTarget();
         if(!meleeGoal.canReachTarget(target)) return false;
         mob.swing(InteractionHand.MAIN_HAND);
-        mob.doHurtTarget(target);
+        mob.doHurtTarget((ServerLevel) target.level(),target);
         meleeCooldown = meleeGoal.getMeleeInterval();
 //        if(phase == ShootPhase.VOLLEY || phase == ShootPhase.TELEGRAPHING_VOLLEY) endVolley();
         return true;

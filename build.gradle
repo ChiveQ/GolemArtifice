@@ -19,10 +19,10 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = "${mod_id}-${minecraft_version}"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     // Specify the version of NeoForge to use.
@@ -61,7 +61,8 @@ neoForge {
         }
 
         data {
-            data()
+            //data()
+            clientData()
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
             // gameDirectory = project.file('run-data')
@@ -123,16 +124,14 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    compileOnly "curse.maven:geckolib-388172:8893490"
-    runtimeOnly "curse.maven:geckolib-388172:8893490"
-    runtimeOnly "curse.maven:irons-lib-1492763:8973642"
-    implementation "curse.maven:irons-artifice-1650193:8974634"
-    compileOnly "curse.maven:l2library-620203:7584599"
-    compileOnly "dev.xkmc.mob_weapon_api:mob_weapon_api:3.0.21"
-    runtimeOnly "curse.maven:l2library-620203:7584599"
-    implementation "curse.maven:modulargolems-690937:8696229"
-    // optional
-    runtimeOnly "curse.maven:l2-backpack-620229:8538050"
+    compileOnly "curse.maven:geckolib-388172:8327201"
+    runtimeOnly "curse.maven:geckolib-388172:8327201"
+    runtimeOnly "curse.maven:irons-lib-1492763:8992197"
+    implementation "curse.maven:irons-artifice-1650193:8974275"
+    compileOnly "curse.maven:l2library-620203:8518628"
+    compileOnly "dev.xkmc.mob_weapon_api:mob_weapon_api:26.1.2.0+4"
+    runtimeOnly "curse.maven:l2library-620203:8518628"
+    implementation "curse.maven:modulargolems-690937:8494165"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

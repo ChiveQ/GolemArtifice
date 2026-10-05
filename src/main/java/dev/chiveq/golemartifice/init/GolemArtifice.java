@@ -3,9 +3,11 @@ package dev.chiveq.golemartifice.init;
 import com.mojang.logging.LogUtils;
 import dev.chiveq.golemartifice.content.GolemRangedGunAttackGoal;
 import dev.xkmc.mob_weapon_api.registry.WeaponStatus;
-import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry;
+//import dev.xkmc.modulargolems.content.entity.humanoid.weapon.GolemWeaponRegistry;
+import dev.xkmc.modulargolems.content.entity.weapon.GolemWeaponRegistry;
 import io.redspace.irons_artifice.item.GunItem;
-import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -38,7 +40,7 @@ public class GolemArtifice {
         });
     }
 
-    public static ResourceLocation loc(String id) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, id);
+    public static Identifier loc(String id) {
+        return Identifier.fromNamespaceAndPath(MODID, id);
     }
 }

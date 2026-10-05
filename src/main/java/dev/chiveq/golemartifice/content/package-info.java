@@ -1,7 +1,4 @@
 @ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 package dev.chiveq.golemartifice.content;
-
-import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

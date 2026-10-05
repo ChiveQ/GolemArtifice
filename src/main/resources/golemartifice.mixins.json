@@ -8,9 +8,6 @@
     "HumanoidGolemEntityMixin"
   ],
   "client": [
-    "HumanoidGolemModelMixin",
-    "HumanoidModelAccessor",
-    "PlayerModelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
