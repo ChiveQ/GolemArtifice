@@ -16,6 +16,16 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    // 应网病
+    maven {
+        name = 'NeoForged'
+        url = 'https://neoforged.forgecdn.net/releases'
+    }
+    maven {
+        name = 'NeoForged Mojang Meta'
+        url = 'https://neoforged.forgecdn.net/mojang-meta'
+    }
+
 }
 
 base {
@@ -127,7 +137,8 @@ dependencies {
     compileOnly "curse.maven:geckolib-388172:8327201"
     runtimeOnly "curse.maven:geckolib-388172:8327201"
     runtimeOnly "curse.maven:irons-lib-1492763:8992197"
-    implementation "curse.maven:irons-artifice-1650193:8974275"
+    // implementation "curse.maven:irons-artifice-1650193:8974275" // 1.0.1.1
+    implementation "curse.maven:irons-artifice-1650193:9093097" // 1.1.0
     compileOnly "curse.maven:l2library-620203:8518628"
     compileOnly "dev.xkmc.mob_weapon_api:mob_weapon_api:26.1.2.0+4"
     runtimeOnly "curse.maven:l2library-620203:8518628"
