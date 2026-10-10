@@ -2,6 +2,7 @@ package dev.chiveq.golemartifice.util;
 
 import dev.chiveq.golemartifice.init.GAConfig;
 import dev.xkmc.modulargolems.content.entity.common.AbstractGolemEntity;
+import io.redspace.irons_artifice.item.BulletContainerItem;
 import io.redspace.irons_artifice.utils.IronsArtificeTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class GolemAmmoUtil {
     }
 
     /**
-     * 傀儡所携弹总数。
+     * 傀儡所携弹总数。对应GunplayManager::countBullets
      */
     public static int countAmmo(List<IItemHandlerModifiable> inventories) {
         int total = 0;
@@ -36,6 +37,8 @@ public class GolemAmmoUtil {
                 ItemStack stack = inv.getStackInSlot(i);
                 if (stack.is(IronsArtificeTags.AMMO)) {
                     total += stack.getCount();
+                }else if(stack.getItem() instanceof BulletContainerItem){
+                    total += BulletContainerItem.count(stack); // 弹药盒
                 }
             }
         }
@@ -53,13 +56,13 @@ public class GolemAmmoUtil {
     /**
      * 按物品栏顺序扣除子弹，返回实际扣除的数量。
      */
-    @Unique
     public static int consumeAmmo(List<IItemHandlerModifiable> inventories, int amount) {
         int remaining = amount;
         for (IItemHandlerModifiable inv : inventories) {
             if (remaining <= 0) {
                 break;
             }
+            // 零弹
             for (int i = 0; i < inv.getSlots() && remaining > 0; i++) {
                 ItemStack stack = inv.getStackInSlot(i);
                 if (!stack.is(IronsArtificeTags.AMMO)) {
@@ -67,6 +70,14 @@ public class GolemAmmoUtil {
                 }
                 int take = Math.min(remaining, stack.getCount());
                 remaining -= inv.extractItem(i, take, false).getCount();
+            }
+            // 弹盒
+            for (int i = 0; i < inv.getSlots() && remaining > 0; i++) {
+                ItemStack stack = inv.getStackInSlot(i);
+                if (!(stack.getItem() instanceof  BulletContainerItem)) {
+                    continue;
+                }
+                remaining -= BulletContainerItem.drain(stack,remaining);
             }
         }
         return amount - remaining;
