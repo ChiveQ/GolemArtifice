@@ -25,12 +25,8 @@ public class GolemArtifice {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,GAConfig.SPEC);
     }
 
-    /**
-     * 注册远程武器
-     * 此处效仿taczgolemcompat
-     * */
     @SubscribeEvent
-    public void setup(final FMLCommonSetupEvent event) {
+    public static void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(()->{
             GolemWeaponRegistry.HUMANOID.register(loc("irons_artifice_gun"),
                     (golem,stack,hand) -> WeaponStatus.RANGED.of(stack.getItem() instanceof GunItem),
