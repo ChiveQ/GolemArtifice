@@ -1,9 +1,9 @@
 package dev.chiveq.golemartifice.init;
 
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 @EventBusSubscriber(modid = GolemArtifice.MODID)
 public class GAConfig {
