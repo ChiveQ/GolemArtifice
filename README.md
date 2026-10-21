@@ -7,7 +7,7 @@
 This is a compat mod for [Modular Golems](https://github.com/Minecraft-LightLand/ModularGolems) and [Irons Artifice](https://github.com/iron431/irons-artifice) that allows Humanoid Golems to use the guns.
 Just give the golem a gun like giving it any other weapon, and put bullets in its offhand slot or arrow slot if needed, and the golem will fire like gun using mobs in the IAA mod.
 ## Versions
-Currently supports 1.21.1. Will support 26.1.2 in the future, and 1.20.1 after IAA is ported.
+Supports stable versions that MG and IAA coexist, current 1.20.1/1.21.1/26.1.2.
 ## Features
 - Golems consume bullets from its inventory or dimensional backpacks from L2Backpacks, from bullet boxes as well (0.2+).
 - Golems won't hurt each other when shooting.
@@ -22,7 +22,7 @@ These configs can be changed separately for player golems and hostile golems.
 这是[傀儡装配](https://github.com/Minecraft-LightLand/ModularGolems)和[Iron的武备与巧械](https://github.com/iron431/irons-artifice)的兼容模组，允许人形傀儡使用火枪。
 像给傀儡其他武器一样给它一把火枪，如果需要，在它的副手槽或箭矢槽放子弹，它就会像IAA的持枪敌对生物一样射击。
 ## 版本
-目前支持1.21.1。未来将支持26.1.2，IAA完成移植后支持1.20.1。
+支持所有MG与IAA共存的稳定版本，目前为1.20.1/1.21.1/26.1.2。
 ## 功能
 - 傀儡从自身的槽位或莱特兰背包的末影背包消耗弹药，也会使用弹药盒（0.2+）。
 - 傀儡射击时不会误伤友方傀儡。
