@@ -4,6 +4,7 @@
   "package": "dev.chiveq.golemartifice.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractGolemEntityInvoker",
     "GunplayManagerMixin",
     "HumanoidGolemEntityMixin"
   ],

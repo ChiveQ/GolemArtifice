@@ -6,11 +6,7 @@ import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemEntity;
 import io.redspace.irons_artifice.data.ReloadResult;
 import io.redspace.irons_artifice.data.ShotComponents;
 import io.redspace.irons_artifice.gun.ShotProfile;
-import io.redspace.irons_artifice.item.GunItem;
-import io.redspace.irons_artifice.item.GunplayManager;
-import io.redspace.irons_artifice.item.MagazineContents;
-import io.redspace.irons_artifice.item.ReloadState;
-import io.redspace.irons_artifice.item.TopLoadConfig;
+import io.redspace.irons_artifice.item.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -31,7 +27,9 @@ import java.util.List;
  * 其余情况（非傀儡、以及配置为无限弹药的傀儡）直接放行给原逻辑。
  *
  * <p>弹药来源取自 {@link AbstractGolemEntity#aggregateInventories()}，
- * 也就是本体对"傀儡身上带着什么"的定义，顺序为：
+ * 也就是本体对"傀儡身上带着什么"的定义（该方法在 1.20.1 中是 {@code protected}，
+ * 由 {@code GolemAmmoUtil#aggregateInventories} 里的 {@code @Invoker} 桥接访问），
+ * 顺序为：
  * 主手与副手 → 装备槽 → 箭矢槽（arrowSlot）→ 备用副手槽（backupHand）。
  * 因此副手槽与箭矢槽里的子弹天然会被消耗，无需单独开槽；
  * 同时该列表末尾会由 {@code GolemCollectInventoryEvent} 补上其它模组注入的容器，
@@ -47,7 +45,9 @@ public abstract class GunplayManagerMixin {
     /**
      * 接管装填的起始：没有可用子弹就不进入装填状态。
      */
-    @Inject(method = "attemptStartReload", at = @At("HEAD"), cancellable = true)
+    // remap = false：目标是 Iron's Artifice 自己的方法，不在 Minecraft 的混淆映射里，
+    // 运行时按字面名字解析即可（Forge 1.20.1 的 Mixin AP 否则会报找不到映射）。
+    @Inject(method = "attemptStartReload", at = @At("HEAD"), cancellable = true, remap = false)
     private static void GA$golemAmmoStartReload(LivingEntity living, ItemStack gun, CallbackInfoReturnable<ReloadResult> cir) {
         if(!(living instanceof HumanoidGolemEntity)) return;
         if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
@@ -67,7 +67,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 没有子弹就不开始装填；装不下的部分不参与动画时长计算
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
+        List<IItemHandlerModifiable> inventories = GolemAmmoUtil.aggregateInventories(golem);
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
@@ -93,7 +93,7 @@ public abstract class GunplayManagerMixin {
     /**
      * 接管装填的结束：按实际扣得到的数量填进弹匣。
      */
-    @Inject(method = "attemptFinishReload", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "attemptFinishReload", at = @At("HEAD"), cancellable = true, remap = false)
     private static void GA$golemAmmoFinishReload(LivingEntity living, ItemStack gun, int roundsToLoad, CallbackInfoReturnable<ReloadResult> cir) {
         if(!(living instanceof HumanoidGolemEntity)) return;
         if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
@@ -113,7 +113,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 装填期间子弹可能被拿走，此时按无弹处理，等下一次装填
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
+        List<IItemHandlerModifiable> inventories = GolemAmmoUtil.aggregateInventories(golem);
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
