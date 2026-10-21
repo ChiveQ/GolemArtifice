@@ -5,6 +5,7 @@ import dev.xkmc.modulargolems.content.entity.humanoid.HumanoidGolemModel;
 import io.redspace.irons_artifice.client.gun.GunArmPoses;
 import io.redspace.irons_artifice.item.GunItem;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,10 +29,13 @@ public abstract class HumanoidGolemModelMixin {
 
         GunArmPoses.applyHeldGunPoses((HumanoidModel<HumanoidGolemEntity>) (Object) this, entity);
 
+        PlayerModel<HumanoidGolemEntity> self = (PlayerModel<HumanoidGolemEntity>) (Object) this;
+        self.leftSleeve.copyFrom(self.leftArm);
+        self.rightSleeve.copyFrom(self.rightArm);
         // 袖子在 super.setupAnim 和傀儡自己的 setupAnim 里已被 copy 过。
         // 我们刚才改动了手臂、需要重新同步一次、否则袖子会留在改动前的位置。
-        ((PlayerModelAccessor)this).leftSleeve().copyFrom(((HumanoidModelAccessor)this).leftArm());
-        ((PlayerModelAccessor)this).rightSleeve().copyFrom(((HumanoidModelAccessor)this).rightArm());
+//        ((PlayerModelAccessor)this).leftSleeve().copyFrom(((HumanoidModelAccessor)this).leftArm());
+//        ((PlayerModelAccessor)this).rightSleeve().copyFrom(((HumanoidModelAccessor)this).rightArm());
 //        this.leftSleeve.copyFrom(this.leftArm);
 //        this.rightSleeve.copyFrom(this.rightArm);
     }
