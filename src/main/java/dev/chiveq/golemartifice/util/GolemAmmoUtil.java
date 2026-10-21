@@ -6,7 +6,7 @@ import io.redspace.irons_artifice.item.BulletContainerItem;
 import io.redspace.irons_artifice.utils.IronsArtificeTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
