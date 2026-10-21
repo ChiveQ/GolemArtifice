@@ -14,8 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HumanoidGolemModel.class)
 public abstract class HumanoidGolemModelMixin {
 
+    // 生产环境remap = true
     @SuppressWarnings("unchecked")
-    @Inject(method = "setupAnim(Ldev/xkmc/modulargolems/content/entity/humanoid/HumanoidGolemEntity;FFFFF)V", at = @At("TAIL"), remap = false)
+    @Inject(method = "setupAnim(Ldev/xkmc/modulargolems/content/entity/humanoid/HumanoidGolemEntity;FFFFF)V", at = @At("TAIL"))
     private void irons_artifice$applyGunPose(HumanoidGolemEntity entity,
                                              float limbSwing, float limbSwingAmount,
                                              float ageInTicks, float netHeadYaw, float headPitch,
@@ -28,16 +29,11 @@ public abstract class HumanoidGolemModelMixin {
         }
 
         GunArmPoses.applyHeldGunPoses((HumanoidModel<HumanoidGolemEntity>) (Object) this, entity);
-
+        // 袖子在 super.setupAnim 和傀儡自己的 setupAnim 里已被 copy 过。
+        // 我们刚才改动了手臂、需要重新同步一次、否则袖子会留在改动前的位置。
         PlayerModel<HumanoidGolemEntity> self = (PlayerModel<HumanoidGolemEntity>) (Object) this;
         self.leftSleeve.copyFrom(self.leftArm);
         self.rightSleeve.copyFrom(self.rightArm);
-        // 袖子在 super.setupAnim 和傀儡自己的 setupAnim 里已被 copy 过。
-        // 我们刚才改动了手臂、需要重新同步一次、否则袖子会留在改动前的位置。
-//        ((PlayerModelAccessor)this).leftSleeve().copyFrom(((HumanoidModelAccessor)this).leftArm());
-//        ((PlayerModelAccessor)this).rightSleeve().copyFrom(((HumanoidModelAccessor)this).rightArm());
-//        this.leftSleeve.copyFrom(this.leftArm);
-//        this.rightSleeve.copyFrom(this.rightArm);
     }
 
 }
