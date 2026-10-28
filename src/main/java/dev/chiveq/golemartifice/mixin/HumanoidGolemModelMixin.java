@@ -16,7 +16,7 @@ public abstract class HumanoidGolemModelMixin {
 
     // 生产环境remap = true
     @SuppressWarnings("unchecked")
-    @Inject(method = "setupAnim(Ldev/xkmc/modulargolems/content/entity/humanoid/HumanoidGolemEntity;FFFFF)V", at = @At("TAIL"))
+    @Inject(method = "setupAnim(Ldev/xkmc/modulargolems/content/entity/humanoid/HumanoidGolemEntity;FFFFF)V", at = @At("TAIL"), remap = false)
     private void irons_artifice$applyGunPose(HumanoidGolemEntity entity,
                                              float limbSwing, float limbSwingAmount,
                                              float ageInTicks, float netHeadYaw, float headPitch,
