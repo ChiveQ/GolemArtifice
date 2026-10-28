@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-@EventBusSubscriber(modid = GolemArtifice.MODID)
+@EventBusSubscriber(modid = GolemArtifice.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class GAConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
