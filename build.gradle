@@ -121,8 +121,8 @@ dependencies {
     compileOnly fg.deobf("dev.xkmc.mob_weapon_api:mob_weapon_api:${mob_weapon_api_version}")
 
     // Modular Golems
-    compileOnly fg.deobf("curse.maven:modulargolems-690937:9266489")
-    runtimeOnly fg.deobf("curse.maven:modulargolems-690937:9266489")
+    compileOnly fg.deobf("curse.maven:modulargolems-690937:9696164")
+    runtimeOnly fg.deobf("curse.maven:modulargolems-690937:9696164")
 
     // Iron's Lib
     compileOnly fg.deobf("curse.maven:irons-lib-1492763:9003169")
