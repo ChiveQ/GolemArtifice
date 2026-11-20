@@ -49,10 +49,9 @@ public abstract class GunplayManagerMixin {
     // 运行时按字面名字解析即可（Forge 1.20.1 的 Mixin AP 否则会报找不到映射）。
     @Inject(method = "attemptStartReload", at = @At("HEAD"), cancellable = true, remap = false)
     private static void GA$golemAmmoStartReload(LivingEntity living, ItemStack gun, CallbackInfoReturnable<ReloadResult> cir) {
-        if(!(living instanceof HumanoidGolemEntity)) return;
-        if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
+        if(!(living instanceof HumanoidGolemEntity golem)) return;
+        if(GolemAmmoUtil.isInfinite(golem)) return;
         if(living.level().isClientSide()) return;
-        HumanoidGolemEntity golem = (HumanoidGolemEntity) living;
         if (!(gun.getItem() instanceof GunItem gunItem)) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
             return;
@@ -67,7 +66,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 没有子弹就不开始装填；装不下的部分不参与动画时长计算
-        List<IItemHandlerModifiable> inventories = GolemAmmoUtil.aggregateInventories(golem);
+        List<IItemHandlerModifiable> inventories = golem.invManager.aggregateInventories();
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
@@ -95,9 +94,8 @@ public abstract class GunplayManagerMixin {
      */
     @Inject(method = "attemptFinishReload", at = @At("HEAD"), cancellable = true, remap = false)
     private static void GA$golemAmmoFinishReload(LivingEntity living, ItemStack gun, int roundsToLoad, CallbackInfoReturnable<ReloadResult> cir) {
-        if(!(living instanceof HumanoidGolemEntity)) return;
-        if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
-        HumanoidGolemEntity golem = (HumanoidGolemEntity) living;
+        if(!(living instanceof HumanoidGolemEntity golem)) return;
+        if(GolemAmmoUtil.isInfinite(golem)) return;
 
         if (!(gun.getItem() instanceof GunItem gunItem)) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
@@ -113,7 +111,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 装填期间子弹可能被拿走，此时按无弹处理，等下一次装填
-        List<IItemHandlerModifiable> inventories = GolemAmmoUtil.aggregateInventories(golem);
+        List<IItemHandlerModifiable> inventories = golem.invManager.aggregateInventories();
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
