@@ -141,7 +141,7 @@ dependencies {
     compileOnly "curse.maven:l2library-620203:7584599"
     compileOnly "dev.xkmc.mob_weapon_api:mob_weapon_api:3.0.21"
     runtimeOnly "curse.maven:l2library-620203:7584599"
-    implementation "curse.maven:modulargolems-690937:8696229"
+    implementation "curse.maven:modulargolems-690937:9749002"
     // optional
     runtimeOnly "curse.maven:l2-backpack-620229:8538050"
 }
