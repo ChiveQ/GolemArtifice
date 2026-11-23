@@ -49,10 +49,9 @@ public abstract class GunplayManagerMixin {
      */
     @Inject(method = "attemptStartReload", at = @At("HEAD"), cancellable = true)
     private static void GA$golemAmmoStartReload(LivingEntity living, ItemStack gun, CallbackInfoReturnable<ReloadResult> cir) {
-        if(!(living instanceof HumanoidGolemEntity)) return;
-        if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
+        if(!(living instanceof HumanoidGolemEntity golem)) return;
+        if(GolemAmmoUtil.isInfinite(golem)) return;
         if(living.level().isClientSide()) return;
-        HumanoidGolemEntity golem = (HumanoidGolemEntity) living;
         if (!(gun.getItem() instanceof GunItem gunItem)) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
             return;
@@ -95,9 +94,8 @@ public abstract class GunplayManagerMixin {
      */
     @Inject(method = "attemptFinishReload", at = @At("HEAD"), cancellable = true)
     private static void GA$golemAmmoFinishReload(LivingEntity living, ItemStack gun, int roundsToLoad, CallbackInfoReturnable<ReloadResult> cir) {
-        if(!(living instanceof HumanoidGolemEntity)) return;
-        if(GolemAmmoUtil.isInfinite((HumanoidGolemEntity)living)) return;
-        HumanoidGolemEntity golem = (HumanoidGolemEntity) living;
+        if(!(living instanceof HumanoidGolemEntity golem)) return;
+        if(GolemAmmoUtil.isInfinite(golem)) return;
 
         if (!(gun.getItem() instanceof GunItem gunItem)) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
