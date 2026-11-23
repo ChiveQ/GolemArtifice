@@ -67,7 +67,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 没有子弹就不开始装填；装不下的部分不参与动画时长计算
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
+        List<IItemHandlerModifiable> inventories = golem.invManager.aggregateInventories();
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);
@@ -113,7 +113,7 @@ public abstract class GunplayManagerMixin {
         }
 
         // 装填期间子弹可能被拿走，此时按无弹处理，等下一次装填
-        List<IItemHandlerModifiable> inventories = golem.aggregateInventories();
+        List<IItemHandlerModifiable> inventories = golem.invManager.aggregateInventories();
         int available = GolemAmmoUtil.countAmmo(inventories);
         if (available <= 0) {
             cir.setReturnValue(ReloadResult.NO_AMMO);

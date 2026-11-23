@@ -49,7 +49,7 @@ public class GolemAmmoUtil {
      * 傀儡所携弹总数
      * */
     public static int countAmmo(AbstractGolemEntity<?,?> golem){
-        List<IItemHandlerModifiable> available = golem.aggregateInventories();
+        List<IItemHandlerModifiable> available = golem.invManager.aggregateInventories();
         return countAmmo(available);
     }
 
